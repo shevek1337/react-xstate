@@ -3,11 +3,13 @@ import { assign, createMachine } from "xstate";
 type TodoAppMachineEvents =
   | { type: "ADD_TODO" }
   | { type: "CHANGE_ADD_INPUT"; value: string }
-  | { type: "SUBMIT_FOR_SAVING" };
+  | { type: "SUBMIT_FOR_SAVING" }
+  | { type: "DELETE_TODO"; value: string };
 
 type TodoAppMachineServices = {
   loadTodos: { data: string[] };
   saveTodo: { data: void };
+  deleteTodo: { data: void };
 };
 
 export const todoAppMachine = createMachine(
@@ -46,6 +48,9 @@ export const todoAppMachine = createMachine(
           ADD_TODO: {
             target: "creatingNewTodo",
           },
+          DELETE_TODO: {
+            target: "deletingTodo",
+          },
         },
       },
       loadingFailed: {},
@@ -78,6 +83,16 @@ export const todoAppMachine = createMachine(
               ],
             },
           },
+        },
+      },
+      deletingTodo: {
+        invoke: {
+          src: "deleteTodo",
+          onDone: [
+            {
+              target: "loading",
+            },
+          ],
         },
       },
     },

@@ -13,6 +13,9 @@ const Home: NextPage = () => {
       saveTodo: async (context, event) => {
         mockTodos.add(context.createNewTodoInput);
       },
+      deleteTodo: async (context, event) => {
+        mockTodos.delete(event.value);
+      },
     },
   });
 
@@ -40,7 +43,19 @@ const Home: NextPage = () => {
       <div>
         <ul>
           {state.context.todos.map((todo, index) => (
-            <li key={index}>{todo}</li>
+            <li key={index}>
+              {todo}{" "}
+              {!state.matches("creatingNewTodo") && (
+                <span
+                  style={{ cursor: "pointer" }}
+                  onClick={(e) => {
+                    send({ type: "DELETE_TODO", value: todo });
+                  }}
+                >
+                  ❌
+                </span>
+              )}
+            </li>
           ))}
         </ul>
       </div>

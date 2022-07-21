@@ -28,20 +28,29 @@ export interface Typegen0 {
       data: unknown;
       __tip: "See the XState TS docs to learn how to strongly type this.";
     };
+    "done.invoke.todoMachine.deletingTodo:invocation[0]": {
+      type: "done.invoke.todoMachine.deletingTodo:invocation[0]";
+      data: unknown;
+      __tip: "See the XState TS docs to learn how to strongly type this.";
+    };
     "xstate.init": { type: "xstate.init" };
   };
   invokeSrcNameMap: {
     loadTodos: "done.invoke.todoMachine.loading:invocation[0]";
     saveTodo: "done.invoke.todoMachine.creatingNewTodo.savingFormInput:invocation[0]";
+    deleteTodo: "done.invoke.todoMachine.deletingTodo:invocation[0]";
   };
   missingImplementations: {
     actions: never;
-    services: "loadTodos" | "saveTodo";
+    services: "loadTodos" | "deleteTodo" | "saveTodo";
     guards: never;
     delays: never;
   };
   eventsCausingServices: {
-    loadTodos: "done.invoke.todoMachine.creatingNewTodo.savingFormInput:invocation[0]";
+    loadTodos:
+      | "done.invoke.todoMachine.creatingNewTodo.savingFormInput:invocation[0]"
+      | "done.invoke.todoMachine.deletingTodo:invocation[0]";
+    deleteTodo: "DELETE_TODO";
     saveTodo: "SUBMIT_FOR_SAVING";
   };
   eventsCausingGuards: {};
@@ -53,6 +62,7 @@ export interface Typegen0 {
     | "creatingNewTodo"
     | "creatingNewTodo.showingFormInput"
     | "creatingNewTodo.savingFormInput"
+    | "deletingTodo"
     | { creatingNewTodo?: "showingFormInput" | "savingFormInput" };
   tags: never;
 }
