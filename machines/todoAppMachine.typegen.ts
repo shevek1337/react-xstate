@@ -6,8 +6,10 @@ export interface Typegen0 {
     setTodos: "done.invoke.todoMachine.loading:invocation[0]";
     setErrorMessage:
       | "error.platform.todoMachine.loading:invocation[0]"
-      | "error.platform.todoMachine.creatingNewTodo.savingFormInput:invocation[0]";
+      | "error.platform.todoMachine.creatingNewTodo.savingFormInput:invocation[0]"
+      | "error.platform.todoMachine.deletingTodo:invocation[0]";
     changeCreateInput: "CHANGE_ADD_INPUT";
+    clearCreateInput: "done.invoke.todoMachine.creatingNewTodo.savingFormInput:invocation[0]";
   };
   internalEvents: {
     "done.invoke.todoMachine.loading:invocation[0]": {
@@ -21,6 +23,10 @@ export interface Typegen0 {
     };
     "error.platform.todoMachine.creatingNewTodo.savingFormInput:invocation[0]": {
       type: "error.platform.todoMachine.creatingNewTodo.savingFormInput:invocation[0]";
+      data: unknown;
+    };
+    "error.platform.todoMachine.deletingTodo:invocation[0]": {
+      type: "error.platform.todoMachine.deletingTodo:invocation[0]";
       data: unknown;
     };
     "done.invoke.todoMachine.creatingNewTodo.savingFormInput:invocation[0]": {
@@ -53,7 +59,9 @@ export interface Typegen0 {
     deleteTodo: "DELETE_TODO";
     saveTodo: "SUBMIT_FOR_SAVING";
   };
-  eventsCausingGuards: {};
+  eventsCausingGuards: {
+    hasData: "done.invoke.todoMachine.loading:invocation[0]";
+  };
   eventsCausingDelays: {};
   matchesStates:
     | "loading"
@@ -63,6 +71,7 @@ export interface Typegen0 {
     | "creatingNewTodo.showingFormInput"
     | "creatingNewTodo.savingFormInput"
     | "deletingTodo"
+    | "deletingFailed"
     | { creatingNewTodo?: "showingFormInput" | "savingFormInput" };
   tags: never;
 }

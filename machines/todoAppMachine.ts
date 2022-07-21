@@ -32,7 +32,11 @@ export const todoAppMachine = createMachine(
           onDone: [
             {
               actions: "setTodos",
+              cond: "hasData",
               target: "todosLoaded",
+            },
+            {
+              target: "creatingNewTodo",
             },
           ],
           onError: [
@@ -73,6 +77,7 @@ export const todoAppMachine = createMachine(
               onDone: [
                 {
                   target: "#todoMachine.loading",
+                  actions: "clearCreateInput",
                 },
               ],
               onError: [
@@ -93,6 +98,19 @@ export const todoAppMachine = createMachine(
               target: "loading",
             },
           ],
+          onError: [
+            {
+              actions: "setErrorMessage",
+              target: "deletingFailed",
+            },
+          ],
+        },
+      },
+      deletingFailed: {
+        after: {
+          "2500": {
+            target: "todosLoaded",
+          },
         },
       },
     },
@@ -109,6 +127,13 @@ export const todoAppMachine = createMachine(
       changeCreateInput: assign({
         createNewTodoInput: (_, event) => event.value,
       }),
+      clearCreateInput: assign({
+        createNewTodoInput: (context, event) =>
+          (context.createNewTodoInput = ""),
+      }),
+    },
+    guards: {
+      hasData: (_, event) => event.data.length > 0,
     },
   }
 );

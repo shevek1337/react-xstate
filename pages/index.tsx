@@ -40,25 +40,27 @@ const Home: NextPage = () => {
           </button>
         </>
       )}
-      <div>
-        <ul>
-          {state.context.todos.map((todo, index) => (
-            <li key={index}>
-              {todo}{" "}
-              {!state.matches("creatingNewTodo") && (
-                <span
-                  style={{ cursor: "pointer" }}
-                  onClick={(e) => {
-                    send({ type: "DELETE_TODO", value: todo });
-                  }}
-                >
-                  ❌
-                </span>
-              )}
-            </li>
-          ))}
-        </ul>
-      </div>
+      {state.matches("todosLoaded") && (
+        <div>
+          <ul>
+            {state.context.todos.map((todo, index) => (
+              <li key={index}>
+                {todo}{" "}
+                {!state.matches("creatingNewTodo") && (
+                  <span
+                    style={{ cursor: "pointer" }}
+                    onClick={(e) => {
+                      send({ type: "DELETE_TODO", value: todo });
+                    }}
+                  >
+                    ❌
+                  </span>
+                )}
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
     </div>
   );
 };
